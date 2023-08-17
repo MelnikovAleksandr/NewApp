@@ -20,7 +20,7 @@ import ru.asmelnikov.newsapp.presentation.onboarding.components.OnBoardingPage
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun OnBoardingScreen() {
+fun OnBoardingScreen(event: (OnBoardingEvents) -> Unit) {
 
     Column(modifier = Modifier.fillMaxSize()) {
         val pagerState = rememberPagerState(initialPage = 0) {
@@ -74,8 +74,8 @@ fun OnBoardingScreen() {
 
                 NewButton(text = buttonState.value[1]) {
                     scope.launch {
-                        if (pagerState.currentPage == 3) {
-                            // nav
+                        if (pagerState.currentPage == 2) {
+                            event(OnBoardingEvents.SaveAppEntry)
                         } else {
                             pagerState.animateScrollToPage(
                                 page = pagerState.currentPage + 1
