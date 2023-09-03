@@ -22,6 +22,8 @@ import ru.asmelnikov.newsapp.R
 import ru.asmelnikov.newsapp.presentation.home.HomeScreen
 import ru.asmelnikov.newsapp.presentation.home.HomeViewModel
 import ru.asmelnikov.newsapp.presentation.navgraph.Route
+import ru.asmelnikov.newsapp.presentation.search.SearchScreen
+import ru.asmelnikov.newsapp.presentation.search.SearchViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -90,7 +92,9 @@ fun Navigator() {
                     })
             }
             composable(route = Route.SearchScreen.route) {
-
+                val viewModel: SearchViewModel = hiltViewModel()
+                val state = viewModel.state.value
+                SearchScreen(state = state, event = viewModel::onEvent)
             }
             composable(route = Route.DetailsScreen.route) {
 

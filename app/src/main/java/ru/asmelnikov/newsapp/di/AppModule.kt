@@ -7,7 +7,6 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.create
 import ru.asmelnikov.newsapp.data.manager.LocalUserManagerImpl
 import ru.asmelnikov.newsapp.data.remote.NewsApi
 import ru.asmelnikov.newsapp.data.repository.NewsRepositoryImpl
@@ -18,6 +17,7 @@ import ru.asmelnikov.newsapp.domain.usecases.app_entry.ReadAppEntryUseCase
 import ru.asmelnikov.newsapp.domain.usecases.app_entry.SaveAppEntryUseCase
 import ru.asmelnikov.newsapp.domain.usecases.news.GetNewsUseCase
 import ru.asmelnikov.newsapp.domain.usecases.news.NewsUseCases
+import ru.asmelnikov.newsapp.domain.usecases.news.SearchNewsUseCase
 import ru.asmelnikov.newsapp.utils.Constants.BASE_URL
 import javax.inject.Singleton
 
@@ -62,7 +62,8 @@ object AppModule {
         newsRepository: NewsRepository
     ): NewsUseCases {
         return NewsUseCases(
-            getNewsUseCase = GetNewsUseCase(newsRepository = newsRepository)
+            getNewsUseCase = GetNewsUseCase(newsRepository = newsRepository),
+            searchNewsUseCase = SearchNewsUseCase(newsRepository = newsRepository)
         )
     }
 
