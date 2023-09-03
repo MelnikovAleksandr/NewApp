@@ -1,4 +1,4 @@
-package ru.asmelnikov.newsapp.domain.usecases
+package ru.asmelnikov.newsapp.domain.usecases.app_entry
 
 import ru.asmelnikov.newsapp.domain.manager.LocalUserManager
 

@@ -5,11 +5,20 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.create
 import ru.asmelnikov.newsapp.data.manager.LocalUserManagerImpl
+import ru.asmelnikov.newsapp.data.remote.NewsApi
+import ru.asmelnikov.newsapp.data.repository.NewsRepositoryImpl
 import ru.asmelnikov.newsapp.domain.manager.LocalUserManager
-import ru.asmelnikov.newsapp.domain.usecases.AppEntryUseCases
-import ru.asmelnikov.newsapp.domain.usecases.ReadAppEntryUseCase
-import ru.asmelnikov.newsapp.domain.usecases.SaveAppEntryUseCase
+import ru.asmelnikov.newsapp.domain.repository.NewsRepository
+import ru.asmelnikov.newsapp.domain.usecases.app_entry.AppEntryUseCases
+import ru.asmelnikov.newsapp.domain.usecases.app_entry.ReadAppEntryUseCase
+import ru.asmelnikov.newsapp.domain.usecases.app_entry.SaveAppEntryUseCase
+import ru.asmelnikov.newsapp.domain.usecases.news.GetNewsUseCase
+import ru.asmelnikov.newsapp.domain.usecases.news.NewsUseCases
+import ru.asmelnikov.newsapp.utils.Constants.BASE_URL
 import javax.inject.Singleton
 
 @Module
@@ -30,5 +39,31 @@ object AppModule {
         readAppEntryUseCase = ReadAppEntryUseCase(localUserManager),
         saveAppEntryUseCase = SaveAppEntryUseCase(localUserManager)
     )
+
+    @Provides
+    @Singleton
+    fun provideNewsApi(): NewsApi {
+        return Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(NewsApi::class.java)
+    }
+
+    @Provides
+    @Singleton
+    fun provideNewsRepository(
+        newsApi: NewsApi
+    ): NewsRepository = NewsRepositoryImpl(newsApi = newsApi)
+
+    @Provides
+    @Singleton
+    fun provideNewsUseCases(
+        newsRepository: NewsRepository
+    ): NewsUseCases {
+        return NewsUseCases(
+            getNewsUseCase = GetNewsUseCase(newsRepository = newsRepository)
+        )
+    }
 
 }
