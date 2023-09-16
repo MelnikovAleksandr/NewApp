@@ -19,4 +19,6 @@ sealed class Route(
     object AppStartNavigation : Route(route = "appStartNavigation")
 
     object NewsNavigation : Route(route = "newsNavigation")
+
+    object NavigatorScreen : Route(route = "navigator")
 }

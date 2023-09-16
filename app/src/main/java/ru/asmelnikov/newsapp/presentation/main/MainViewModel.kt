@@ -8,7 +8,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
-import ru.asmelnikov.newsapp.domain.usecases.AppEntryUseCases
+import ru.asmelnikov.newsapp.domain.usecases.app_entry.AppEntryUseCases
 import ru.asmelnikov.newsapp.presentation.navgraph.Route
 import javax.inject.Inject
 
