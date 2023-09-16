@@ -18,4 +18,6 @@ object Dimens {
 
     val ArticleCardSize = 96.dp
 
+    val ArticleImageHeight = 248.dp
+
 }
