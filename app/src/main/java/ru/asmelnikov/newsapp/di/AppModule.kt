@@ -19,9 +19,13 @@ import ru.asmelnikov.newsapp.domain.repository.NewsRepository
 import ru.asmelnikov.newsapp.domain.usecases.app_entry.AppEntryUseCases
 import ru.asmelnikov.newsapp.domain.usecases.app_entry.ReadAppEntryUseCase
 import ru.asmelnikov.newsapp.domain.usecases.app_entry.SaveAppEntryUseCase
+import ru.asmelnikov.newsapp.domain.usecases.news.DeleteArticle
 import ru.asmelnikov.newsapp.domain.usecases.news.GetNewsUseCase
+import ru.asmelnikov.newsapp.domain.usecases.news.GetSavedArticle
+import ru.asmelnikov.newsapp.domain.usecases.news.GetSavedArticles
 import ru.asmelnikov.newsapp.domain.usecases.news.NewsUseCases
 import ru.asmelnikov.newsapp.domain.usecases.news.SearchNewsUseCase
+import ru.asmelnikov.newsapp.domain.usecases.news.UpsertArticle
 import ru.asmelnikov.newsapp.utils.Constants.BASE_URL
 import ru.asmelnikov.newsapp.utils.Constants.NEWS_DB_NAME
 import javax.inject.Singleton
@@ -58,8 +62,9 @@ object AppModule {
     @Provides
     @Singleton
     fun provideNewsRepository(
-        newsApi: NewsApi
-    ): NewsRepository = NewsRepositoryImpl(newsApi = newsApi)
+        newsApi: NewsApi,
+        newsDao: NewsDao
+    ): NewsRepository = NewsRepositoryImpl(newsApi = newsApi, newsDao = newsDao)
 
     @Provides
     @Singleton
@@ -68,7 +73,11 @@ object AppModule {
     ): NewsUseCases {
         return NewsUseCases(
             getNewsUseCase = GetNewsUseCase(newsRepository = newsRepository),
-            searchNewsUseCase = SearchNewsUseCase(newsRepository = newsRepository)
+            searchNewsUseCase = SearchNewsUseCase(newsRepository = newsRepository),
+            deleteArticle = DeleteArticle(newsRepository = newsRepository),
+            upsertArticle = UpsertArticle(newsRepository = newsRepository),
+            getSavedArticle = GetSavedArticle(newsRepository = newsRepository),
+            getSavedArticles = GetSavedArticles(newsRepository = newsRepository)
         )
     }
 
