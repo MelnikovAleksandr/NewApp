@@ -53,7 +53,9 @@ fun ArticleCard(
                 .clip(MaterialTheme.shapes.medium),
             model = ImageRequest.Builder(context).data(article.urlToImage).build(),
             contentDescription = null,
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            error = painterResource(id = R.drawable.placeholder),
+            placeholder = painterResource(id = R.drawable.placeholder)
         )
         Column(
             verticalArrangement = Arrangement.SpaceAround,
